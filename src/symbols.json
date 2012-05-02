@@ -1,0 +1,7 @@
+{
+	"assignment": "=",
+	"operation": "[+-*/]",
+	"identifier": "[a-z]+",
+	"scalar": "[0-9]+",
+	"dquote": "\""
+}

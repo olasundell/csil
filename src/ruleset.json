@@ -1,0 +1,13 @@
+{
+	"reserved": {
+		"out": ["lparen"],
+		"lparen": ["dquote", "identifier", "scalar" ],
+		"rparen": [ "newline" ],
+		"newline": []
+	},
+
+	"assignment": ["scalar", "identifier" ],
+	"operation": [ "scalar", "identifier" ],
+	"scalar": [ "newline", "operation" ],
+	"identifier": [ "newline", "operation" ]
+}
