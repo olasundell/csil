@@ -1,11 +1,6 @@
 {
-	"reserved": {
-		"out": ["lparen"],
-		"lparen": ["dquote", "identifier", "scalar" ],
-		"rparen": [ "newline" ],
-		"newline": []
-	},
-
+	"out": [ "scalar" ],
+	"newline": [],
 	"assignment": ["scalar", "identifier" ],
 	"operation": [ "scalar", "identifier" ],
 	"scalar": [ "newline", "operation" ],
