@@ -1,51 +1,44 @@
-fs = require 'fs'
-util = require 'util'
+{Out} = require './symbols/Out'
+{StringSymbol} = require './symbols/StringSymbol'
+{Newline} = require './symbols/Newline'
+{EOF} = require './symbols/EOF'
+
+ruleset =
+	Out: [ StringSymbol ],
+	StringSymbol: [ Newline, EOF ],
+	Newline: [ EOF, Out ],
+	EOF: []
+#	scalar: [ @newline, @operation ],
+#	assignment: [ @scalar, @identifier ],
+#	operation: [ @scalar, @identifier ],
+#	identifier: [ @newline, @operation ]
+#	dquote: [ @ ]
 
 class Parser
 	constructor: ->
-		@loadruleset()
-		@loadsymbols()
-		@parsefile()
 
-	loadsymbols: ->
-		@symbols = JSON.parse(fs.readFileSync('src/symbols.json').toString())
+	parse: (states) ->
+		if states.length is 0
+			throw "unexpected end reached"
 
-	loadruleset: ->
-		@ruleset = JSON.parse(fs.readFileSync('src/ruleset.json').toString())
+		return @parseIterate(states.shift(), states)
 
-	parsefile: (filename) ->
-		code = fs.readFileSync('src/csil/hello.csil').toString()
-		state = null
-		previousState = null
-		states = []
+	parseIterate: (currentState, states) ->
+		console.log "currentState: " + currentState + " and states: " + states
+		if currentState instanceof EOF
+			return
+		if states.length is 0
+			throw "unexpected end reached in iteration"
 
-		currentToken = ""
+		nextState = states.shift()
 
-		util.puts "starting"
+		for klass in ruleset[currentState]
+			if nextState instanceof klass
+				foo = true
 
-		for c in code
-			currentToken = currentToken + c
+		if foo is false
+			throw "parsing error"
 
-			if @symbols[currentToken] # reserved word
-				util.puts currentToken
-				currentToken = ""
-			else
-				for symbol in @symbols
-					util.puts symbol
-					if currentToken.match symbol
-						util.puts currentToken
-						currentToken = ""
+		return @parseIterate(nextState, states)
 
-#				previousState = state
-#				state = @symbols[currentToken]
-#
-#				if previousState isnt null
-#					if not state in @ruleset[previousState]
-#						throw "compilation error!"
-		util.puts "finished"
-
-parser = new Parser()
-
-#			mappedToken = @symbols[currentToken]
-#			if mappedToken isnt null and mappedToken isnt ""
-
+exports.Parser = Parser

@@ -1,0 +1,11 @@
+symbols = {
+	"assignment": "=",
+	"operation": "[+-*/]",
+	"identifier": "[a-z]+",
+	"scalar": "[0-9]+",
+	"string": "\".*\"",
+	"lparen": "(",
+	"rparen": ")",
+	"out": "out",
+	"newline": "\n"
+}

@@ -1,0 +1,8 @@
+ruleset = {
+	"out": [ "scalar" ],
+	"newline": [],
+	"assignment": ["scalar", "identifier" ],
+	"operation": [ "scalar", "identifier" ],
+	"scalar": [ "newline", "operation" ],
+	"identifier": [ "newline", "operation" ]
+}
